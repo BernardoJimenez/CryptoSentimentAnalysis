@@ -34,11 +34,10 @@ submission.comments.replace_more(limit=None)
 number_of_scores = 0
 # set initial total analysis score to zero
 total_sentiment = 0.0
-'''
+
 # for each comment in the submission, traversing as a breadth-first list
 for comment in submission.comments.list():
-    # # bodies of comments return as type String
-    print(type(comment.body))
+    # bodies of comments return as type String
     # increment the number of scores/comments seen by 1
     number_of_scores += 1
     # perform sentiment analysis on the comment using Amazon Comprehend from AWS
@@ -50,14 +49,13 @@ for comment in submission.comments.list():
 # calculate the submission's total score by averaging all comment scores
 total_sentiment = total_sentiment/number_of_scores
 # print the total sentiment score
-print(total_sentiment)  # 0.25028982493284996 as of 05/20/18
-'''
+print(total_sentiment)  # 0.25074256019619073 as of 05/22/18
+
 
 
 # CoinMarketCap API has 2 version, a paid version in development,
 # and has no option to extract historical data on coins on any thus far...
 # Using CryptoCompare site's API instead:
-r = requests.get('https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20180501&end=20180507')
-print(r.text)
+# use 'Historical Daily OHLCV
 
 

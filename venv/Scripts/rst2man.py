@@ -1,4 +1,4 @@
-#!C:\Users\cjime593\PycharmProjects\CryptoSentiment\venv\Scripts\python.exe
+#!C:\Users\User\PycharmProjects\CryptoSentimentAnalysis\venv\Scripts\python.exe
 
 # Author: 
 # Contact: grubert@users.sf.net

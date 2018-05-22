@@ -1,4 +1,4 @@
-#!C:\Users\cjime593\PycharmProjects\CryptoSentiment\venv\Scripts\python.exe
+#!C:\Users\User\PycharmProjects\CryptoSentimentAnalysis\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'setuptools==39.0.1','console_scripts','easy_install'
 __requires__ = 'setuptools==39.0.1'
 import re
