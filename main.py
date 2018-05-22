@@ -1,4 +1,4 @@
-#  Amazon Web Services (AWS) SDK for Python
+# Amazon Web Services (AWS) SDK for Python
 import boto3
 # PRAW: Python Reddit API Wrapper
 import praw
@@ -36,8 +36,8 @@ number_of_scores = 0
 total_sentiment = 0.0
 
 # for each comment in the submission, traversing as a breadth-first list
+# bodies of comments return as type: String
 for comment in submission.comments.list():
-    # bodies of comments return as type String
     # increment the number of scores/comments seen by 1
     number_of_scores += 1
     # perform sentiment analysis on the comment using Amazon Comprehend from AWS
@@ -52,10 +52,9 @@ total_sentiment = total_sentiment/number_of_scores
 print(total_sentiment)  # 0.25074256019619073 as of 05/22/18
 
 
-
 # CoinMarketCap API has 2 version, a paid version in development,
 # and has no option to extract historical data on coins on any thus far...
-# Using CryptoCompare site's API instead:
-# use 'Historical Daily OHLCV
+# Using CryptoCompare site's API instead: https://min-api.cryptocompare.com
+# use 'Historical Daily OHLCV' API Historical Data section
 
 
