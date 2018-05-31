@@ -4,7 +4,11 @@ import boto3
 import praw
 # requests library used to make HTTP calls
 import requests
+# configure the OS date and time
+import win32api
+# write/read JavaScript Object Notation
 import json
+
 
 # The state of this project thus far is a proof of concept, using the technologies as intended.
 # The completed state will incorporate the Reddit API, CoinMarketCap API, and AWS to determine
@@ -34,7 +38,7 @@ submission.comments.replace_more(limit=None)
 number_of_scores = 0
 # set initial total analysis score to zero
 total_sentiment = 0.0
-
+'''
 # for each comment in the submission, traversing as a breadth-first list
 # bodies of comments return as type: String
 for comment in submission.comments.list():
@@ -50,11 +54,24 @@ for comment in submission.comments.list():
 total_sentiment = total_sentiment/number_of_scores
 # print the total sentiment score
 print(total_sentiment)  # 0.25074256019619073 as of 05/22/18
+'''
 
-
-# CoinMarketCap API has 2 version, a paid version in development,
-# and has no option to extract historical data on coins on any thus far...
-# Using CryptoCompare site's API instead: https://min-api.cryptocompare.com
+# Using CryptoCompare site's API: https://min-api.cryptocompare.com
 # use 'Historical Daily OHLCV' API Historical Data section
+BTC_data_url = 'https://min-api.cryptocompare.com/data/histoday'
+url_params = {'fsym': 'BTC', 'tsym': 'USD', 'limit': '7'}
 
+# In order to change system time, disable Admin Approval Mode in:
+# Local Security Policy > Local Policies > Security Options
+win32api.SetSystemTime(2018, 5, 1, 8, 0, 0, 0, 0)
+# to reset: Set the Time and Date > Internet Time > Change Settings > Update Now
+# The purpose of setting the System time to May 7th is so i could extract a precise
+# range of dates to use with the CryptoCompare API. The API has no option for start
+# date, and thus forces the user to start from the current date. However, I now
+# see the API was never using my System date and instead used their own server's (duh)
+# As such, my plan now is to extract the dates I want and save the JSON to a static text
+# file to parse values from so my data does not change on each run. To do this, I'll use
+# the CryptoCompare API in a separate Python file and save the results.
 
+BTC_data = requests.get(BTC_data_url, params=url_params)
+print(BTC_data.json())
