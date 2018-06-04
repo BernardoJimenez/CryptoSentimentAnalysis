@@ -55,4 +55,3 @@ print(total_sentiment)  # 0.25074256019619073 as of 05/22/18
 '''
 
 BTC_data = json.load('BTC_data_file.txt')["Data"]
-
