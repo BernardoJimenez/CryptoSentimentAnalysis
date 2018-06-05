@@ -1,5 +1,7 @@
-import pandas
+# write/read JavaScript Object Notation
 import json
+# data structures for analysis
+import pandas
 
 # Issue occurred. PyCharm kept returning the error:
 # 'ImportError: DLL load failed: The specified module could not be found.'
@@ -106,6 +108,9 @@ crypto_dataframe['XRP_low'] = XRP_lows
 crypto_dataframe['XRP_median'] = XRP_medians
 crypto_dataframe['XRP_median_percent_change'] = XRP_medians_change
 
-print(crypto_dataframe.to_string())
-# will move this code to main and calculate sentiment values through AWS next
+# SYMBOL_positive_sentiment
 
+# Save current dataframe to csv file
+crypto_dataframe.to_csv('crypto_dataframe.csv')
+# All that is missing is the sentiment columns
+print(crypto_dataframe.to_string())

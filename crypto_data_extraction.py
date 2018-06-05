@@ -3,7 +3,7 @@ import requests
 # write/read JavaScript Object Notation
 import json
 
-'''
+
 # Using CryptoCompare site's API: https://min-api.cryptocompare.com
 # use 'Historical Daily OHLCV' API Historical Data section
 BTC_data_url = 'https://min-api.cryptocompare.com/data/histoday'
@@ -39,6 +39,6 @@ XRP_data = requests.get(XRP_data_url, params=url_params)
 
 with open('XRP_data_file.txt', 'w') as outfile:
     json.dump(XRP_data.json(), outfile)
-'''
+
 # DO NOT RUN THIS AGAIN.
 # Needed to run only once to produce the 3 static historic price data .txt files
