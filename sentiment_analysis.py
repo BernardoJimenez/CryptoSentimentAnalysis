@@ -2,12 +2,10 @@
 import boto3
 # PRAW: Python Reddit API Wrapper
 import praw
-# write/read JavaScript Object Notation
-import json
 # data structures for analysis
 import pandas
-# Analysis will be visualized in Tableau. As I would be using the pubic version of Tableau, if my
-# visuals are not able to be exported/downloaded, I'll switch to using the Python package Seaborn instead.
+# System specific parameters
+import sys
 
 
 # attach comprehend service to variable, making sure to use hardcode region wth that service
@@ -48,8 +46,8 @@ def get_sentiment_scores(coin_list):
         for daily_thread in coin:
             # the url for the Reddit.com submission thread
             submission = reddit.submission(id=daily_thread)
-            # remove all links in comments thread that load more comments
-            submission.comments.replace_more(limit=64)
+            # remove links in comments thread that load more comments (2.5x default)
+            submission.comments.replace_more(limit=80)
 
             # set initial number of sentiment scores to zero
             number_of_scores = 0
@@ -59,20 +57,20 @@ def get_sentiment_scores(coin_list):
             # for each comment in the submission, traversing as a breadth-first list
             # bodies of comments return as type: String
             for comment in submission.comments.list():
-                # increment the number of scores/comments seen by 1
-                number_of_scores += 1
-                # perform sentiment analysis on the comment using Amazon Comprehend from AWS
-
-                # ISSUE: A SINGLE COMMENT I'M PARSING IS EXCEEDING 5000 BYTES
-                # SOLUTION: I MUST CHECK THE SIZE OF THE COMMENT IN BYTES BEFORE PASSING TO AWS COMPREHEND
-                # WHY: AMAZON COMPREHEND RETURNS ERROR IF INPUT SIZE IS GREATER THAN 5000 BYTES
-                # NOTE: I HATE REDDITORS WHO WRITE WALLS OF TEXT
-                analysis = comprehend.detect_sentiment(Text=comment.body, LanguageCode='en')
-
-                # obtain the coefficient for positiveness from the json file
-                comment_score = analysis["SentimentScore"]["Positive"]
-                # add the comment score to the submission's total score
-                total_sentiment += comment_score
+                # check if size of user comment exceeds 5000 bytes
+                # Amazon Comprehend has an input limit of 5000 bytes
+                if sys.getsizeof(comment.body) > 5000:
+                    # if so, continue to next loop
+                    continue
+                else:
+                    # increment the number of scores/comments seen by 1
+                    number_of_scores += 1
+                    # perform sentiment analysis on the comment using Amazon Comprehend from AWS
+                    analysis = comprehend.detect_sentiment(Text=comment.body, LanguageCode='en')
+                    # obtain the coefficient for positiveness from the json file
+                    comment_score = analysis["SentimentScore"]["Positive"]
+                    # add the comment score to the submission's total score
+                    total_sentiment += comment_score
             # calculate the submission's total score by averaging all comment scores
             total_sentiment = total_sentiment/number_of_scores
             # add the total sentiment score of the daily thread to the coin's list
@@ -85,21 +83,17 @@ def get_sentiment_scores(coin_list):
 # use defined method to store scores in a list of
 # lists with one list of scores for each coin
 scores = get_sentiment_scores(coin_list_of_threads)
-
+# read current data from csv file to a new dataframe
 crypto_dataframe = pandas.read_csv('crypto_dataframe.csv')
-
+# add the score list to each coin sentiment column
 crypto_dataframe['BTC_positive_sentiment'] = scores[0]
 crypto_dataframe['ETH_positive_sentiment'] = scores[1]
 crypto_dataframe['XRP_positive_sentiment'] = scores[2]
 
+# overwrite the csv file with the updated columns
 crypto_dataframe.to_csv('crypto_dataframe.csv')
+'''
 crypto_dataframe = pandas.read_csv('crypto_dataframe.csv')
 print(crypto_dataframe.to_string())
 '''
-# create a new file to save lists to
-list_file = open('scores.txt', 'w')
-# serialize to JSON (human and program readable)
-json.dump(list_of_score_lists, list_file)
-# close file
-list_file.close()
-'''
+# DO NOT RUN this again. Needed only once to get sentiment scores into the .csv file

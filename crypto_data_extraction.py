@@ -40,5 +40,4 @@ XRP_data = requests.get(XRP_data_url, params=url_params)
 with open('XRP_data_file.txt', 'w') as outfile:
     json.dump(XRP_data.json(), outfile)
 
-# DO NOT RUN THIS AGAIN.
-# Needed to run only once to produce the 3 static historic price data .txt files
+# DO NOT RUN again. Needed only once to get coin historic data .txt files
