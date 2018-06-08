@@ -1,0 +1,15 @@
+The R-squared score for the Bitcoin linear regression model is 0.5322557557738816
+The y-intercept for the Bitcoin model is -14.880278801667508
+The coefficient for the Bitcoin predictor is [83.84821716]
+
+The R-squared score for the Ethereum linear regression model is 0.6077744662209354
+The y-intercept for the Ethereum model is -47.01081392766967
+The coefficient for the Ethereum predictor is [285.10936866]
+
+The R-squared score for the Ripple linear regression model is 0.38390216421612855
+The y-intercept for the Ripple model is -16.791401736838612
+The coefficient for the Ripple predictor is [83.90103676]
+
+The R-squared score for the 'all top 3 coins' linear regression model is 0.2042455435855699
+The y-intercept for the top-3-coins model is -13.011669601017225
+The coefficient for the top-3 predictor is [73.69877785]
