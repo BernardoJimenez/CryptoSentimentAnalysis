@@ -108,7 +108,6 @@ crypto_dataframe['XRP_low'] = XRP_lows
 crypto_dataframe['XRP_median'] = XRP_medians
 crypto_dataframe['XRP_median_percent_change'] = XRP_medians_change
 
-# SYMBOL_positive_sentiment
 
 # Save current dataframe to csv file
 crypto_dataframe.to_csv('crypto_dataframe.csv')

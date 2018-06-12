@@ -2,11 +2,14 @@
   <dictionary name="User">
     <words>
       <w>bitcoin</w>
+      <w>cryptocurrencies</w>
       <w>cryptocurrency</w>
+      <w>cryptocurreny</w>
       <w>dataframe</w>
       <w>ethereum</w>
       <w>linreg</w>
       <w>redditors</w>
+      <w>seaborn</w>
     </words>
   </dictionary>
 </component>
